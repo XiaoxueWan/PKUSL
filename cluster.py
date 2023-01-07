@@ -295,6 +295,7 @@ class LearningShapelets:
             D = self.model.transform(x)
             D = torch.squeeze(D)
             D = torch.transpose(D, 1, 0)
+            #对伪类标签进行kmeans初始化
             self.cluster_ids_x, cluster_centers = kmeans(X=D.T, num_clusters=self.num_classes, distance='euclidean', device=torch.device('cuda:0'))
             self.y_pseudo_class=torch.zeros(
                                            size=(self.cluster_ids_x.shape[0],
@@ -307,7 +308,6 @@ class LearningShapelets:
                                           self.y_pseudo_class,
                                           self.y_pseudo_class.sum(0).pow(1/2)
                                           )
-            self.y_pseudo_class=torch.randn((self.cluster_ids_x.shape[0],self.num_classes), requires_grad=False,dtype=torch.float32)
             self.y_pseudo_class = self.y_pseudo_class.float() 
             self.updated_Y = torch.transpose(self.y_pseudo_class, 1, 0)
             self.updated_Y.requires_grad = False

@@ -126,12 +126,6 @@ class Main():
             weights_block = get_weights_via_kmeans(self.x_train, shapelets_size, num_shapelets)
             learning_shapelets.set_shapelet_weights_of_block(i, weights_block)
         
-        #print(list(learning_shapelets.model.parameters()),'%%%%%%%%%%')
-        #optimizer = optim.Adam(learning_shapelets.model.parameters(), lr=self.lr, weight_decay=self.w, eps=self.epsilon)
-        
-        #optimizer_Shapelet = optim.SGD(learning_shapelets.model.parameters(),
-                                      # lr = self.learning_rate, weight_decay = self.learning_weight, momentum = 0)
-        
         optimizer_Shapelet = optim.Adam(learning_shapelets.model.parameters(), lr=self.learning_rate, weight_decay=self.learning_weight, eps=self.epsilon)
         learning_shapelets.set_optimizer(optimizer_Shapelet)
         return learning_shapelets
